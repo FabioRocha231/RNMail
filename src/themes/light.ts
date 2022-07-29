@@ -44,6 +44,7 @@ const theme = createTheme({
     $sidebarForeground: p.navy20,
     $sidebarBackground: p.navy900,
     $sidebarSeparator: p.paper00 + '20',
+    $headerBarBackground: p.paper20
   },
   borderRadii: {
     xs: 4,
@@ -59,6 +60,13 @@ const theme = createTheme({
     },
     sidebar: {
       color: '$sidebarForeground'
+    }
+  },
+  barVariants: {
+    defaults: {},
+    headerBar: {
+      bg: '$headerBarBackground',
+      borderRadius: 'hg'
     }
   }
 })
