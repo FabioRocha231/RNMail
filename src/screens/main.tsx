@@ -1,10 +1,11 @@
-import { Box, Text } from "@/atoms";
+import { Container } from "@/atoms";
+import NoteList from "@/components/note-list";
 import React from "react";
 
 export default function MainScreen() {
   return (
-    <Box flex={1} justifyContent="center" alignItems="center">
-      <Text>Hello, World!!!</Text>
-    </Box>
+    <Container justifyContent="center" alignItems="center">
+      <NoteList />
+    </Container>
   )
 }
