@@ -52,10 +52,6 @@ allprojects {
     }
 }
 
-project.ext.vectoricons = [
-  iconFontNames: ['Feather.ttf']
-]
 
-apply from: '../../node_modules/reac-native-vector-icons/fonts.gradle'
 
 
