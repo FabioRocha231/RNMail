@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { Box, Container, Text, TouchableOpacity } from "@/atoms";
 import HeaderBar from "@/components/header-bar";
 import FeatherIcon from "@/components/icon";
@@ -23,6 +23,7 @@ export default function MainScreen({ navigation }: Props) {
     headerBarStyle,
     headerBarHeight
   } = useStickyHeader()
+  const [concealNoteListItem, setConcealNoteListItem] = useState<(() => void) | null>(null)
   const handleSidebarTogle = useCallback(() => {
     navigation.toggleDrawer()
   }, [navigation])
@@ -30,11 +31,16 @@ export default function MainScreen({ navigation }: Props) {
     // later
   }, [])
 
-  const handleNoteListItemSwipeLeft = useCallback((_noteId: string, _conceal: () => void) => {
+  const handleNoteListItemSwipeLeft = useCallback((_noteId: string, conceal: () => void) => {
     const { current: menu } = refMoveNoteSheet
     if (menu)
       menu.show()
+    setConcealNoteListItem(() => conceal)
   }, [])
+  const handleMoveNoteSheetClose = useCallback(() => {
+    concealNoteListItem && concealNoteListItem()
+    setConcealNoteListItem(null)
+  }, [concealNoteListItem])
   return (
     <Container justifyContent="center" alignItems="center">
       <NoteList
@@ -54,7 +60,7 @@ export default function MainScreen({ navigation }: Props) {
           <FeatherIcon name="more-vertical" size={22} />
         </TouchableOpacity>
       </HeaderBar>
-      <MoveNoteSheet ref={refMoveNoteSheet} />
+      <MoveNoteSheet ref={refMoveNoteSheet} onClose={handleMoveNoteSheetClose} />
     </Container>
   )
 }
