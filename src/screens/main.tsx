@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import { Box, Container, Text, TouchableOpacity } from "@/atoms";
 import HeaderBar from "@/components/header-bar";
 import FeatherIcon from "@/components/icon";
@@ -8,6 +8,7 @@ import { DrawerScreenProps } from "@react-navigation/drawer";
 import { CompositeScreenProps } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import useStickyHeader from "@/hooks/use-sticky-header";
+import MoveNoteSheet from "@/components/move-note-sheet";
 
 type Props = CompositeScreenProps<
   DrawerScreenProps<HomeDrawerParamList, 'Main'>,
@@ -15,6 +16,7 @@ type Props = CompositeScreenProps<
 >
 
 export default function MainScreen({ navigation }: Props) {
+  const refMoveNoteSheet = useRef<MoveNoteSheet>(null)
   const {
     handleNoteListLayout,
     handleScroll,
@@ -24,9 +26,23 @@ export default function MainScreen({ navigation }: Props) {
   const handleSidebarTogle = useCallback(() => {
     navigation.toggleDrawer()
   }, [navigation])
+  const handleNoteListItemPress = useCallback((noteId: string) => {
+    // later
+  }, [])
+
+  const handleNoteListItemSwipeLeft = useCallback((_noteId: string, _conceal: () => void) => {
+    const { current: menu } = refMoveNoteSheet
+    if (menu)
+      menu.show()
+  }, [])
   return (
     <Container justifyContent="center" alignItems="center">
-      <NoteList contentInsetTop={headerBarHeight} onScroll={handleScroll} />
+      <NoteList
+        contentInsetTop={headerBarHeight}
+        onScroll={handleScroll}
+        onItemPress={handleNoteListItemPress}
+        onItemSwipeLeft={handleNoteListItemSwipeLeft}
+      />
       <HeaderBar style={headerBarStyle} onLayout={handleNoteListLayout}>
         <TouchableOpacity m="xs" p="xs" rippleBorderless onPress={handleSidebarTogle}>
           <FeatherIcon name="menu" size={22} />
@@ -38,6 +54,7 @@ export default function MainScreen({ navigation }: Props) {
           <FeatherIcon name="more-vertical" size={22} />
         </TouchableOpacity>
       </HeaderBar>
+      <MoveNoteSheet ref={refMoveNoteSheet} />
     </Container>
   )
 }
