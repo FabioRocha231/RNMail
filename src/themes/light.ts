@@ -1,7 +1,7 @@
 import { createTheme } from '@shopify/restyle'
 import { StatusBarStyle } from 'react-native'
 
-// palette
+// Palette
 const p = {
   white: 'white',
   black: 'black',
@@ -14,8 +14,8 @@ const p = {
   paper300: '#767577',
   paper900: '#202020',
   blue70: '#2185d0',
-  navy20: '#171a20',
-  navy900: '#b9babc',
+  navy20: '#171a21',
+  navy900: '#b9babc'
 }
 
 const theme = createTheme({
@@ -24,10 +24,10 @@ const theme = createTheme({
     xs: 4,
     sm: 8,
     md: 12,
-    lg: 14,
+    lg: 16,
     xl: 24,
     xxl: 48,
-    hg: 128,
+    hg: 128
   },
   breakpoints: {
     phone: 0,
@@ -44,8 +44,8 @@ const theme = createTheme({
     $windowBackground: '#f0f0f0',
     $background: p.paper10,
     $foreground: p.paper900,
-    $sidebarForeground: p.navy20,
-    $sidebarBackground: p.navy900,
+    $sidebarBackground: p.navy20,
+    $sidebarForeground: p.navy900,
     $sidebarSeparator: p.paper00 + '20',
     $headerBarBackground: p.paper20
   },
@@ -54,7 +54,7 @@ const theme = createTheme({
     sm: 16,
     md: 24,
     lg: 64,
-    hg: 128,
+    hg: 128
   },
   statusBar: {
     barStyle: 'dark-content' as StatusBarStyle
@@ -62,14 +62,13 @@ const theme = createTheme({
   textVariants: {
     defaults: {
       color: '$foreground',
-      fontSize: 16,
+      fontSize: 16
     },
     sidebar: {
       color: '$sidebarForeground'
     }
   },
   barVariants: {
-    defaults: {},
     headerBar: {
       bg: '$headerBarBackground',
       borderRadius: 'hg'
@@ -77,4 +76,5 @@ const theme = createTheme({
   }
 })
 export default theme
+
 export type Theme = typeof theme

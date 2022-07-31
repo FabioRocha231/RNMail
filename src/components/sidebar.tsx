@@ -3,6 +3,7 @@ import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import React, { useCallback } from 'react'
 import { SafeAreaView } from 'react-native'
 import BookList from './book-list'
+import InkdropLogo from './inkdrop-logo'
 
 const Sidebar: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
   const handleBookListItemPress = useCallback(() => {
@@ -19,6 +20,7 @@ const Sidebar: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
           borderBottomColor="$sidebarSeparator"
           borderBottomWidth={1}
         >
+          <InkdropLogo width={128} height={36} color="$sidebarForeground" />
         </Box>
       </SafeAreaView>
       <BookList onPressItem={handleBookListItemPress} />
