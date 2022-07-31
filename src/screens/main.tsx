@@ -33,9 +33,10 @@ export default function MainScreen({ navigation }: Props) {
 
   const handleNoteListItemSwipeLeft = useCallback((_noteId: string, conceal: () => void) => {
     const { current: menu } = refMoveNoteSheet
-    if (menu)
+    if (menu) {
       menu.show()
-    setConcealNoteListItem(() => conceal)
+      setConcealNoteListItem(() => conceal)
+    }
   }, [])
   const handleMoveNoteSheetClose = useCallback(() => {
     concealNoteListItem && concealNoteListItem()
@@ -60,7 +61,10 @@ export default function MainScreen({ navigation }: Props) {
           <FeatherIcon name="more-vertical" size={22} />
         </TouchableOpacity>
       </HeaderBar>
-      <MoveNoteSheet ref={refMoveNoteSheet} onClose={handleMoveNoteSheetClose} />
+      <MoveNoteSheet
+        ref={refMoveNoteSheet}
+        onClose={handleMoveNoteSheetClose}
+      />
     </Container>
   )
 }

@@ -25,7 +25,12 @@ const NoteListItemActionView: React.FC<Props> = ({ progress }) => {
       justifyContent="flex-end"
       pr="xl"
     >
-      <AnimatedBox flexDirection="row" alignItems="center" justifyContent="center" style={iconStyle} >
+      <AnimatedBox
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="center"
+        style={iconStyle}
+      >
         <FeatherIcon name="folder" color="white" size={18} />
         <FeatherIcon name="arrow-right" color="white" size={12} />
       </AnimatedBox>

@@ -18,41 +18,39 @@ import {
   withTiming
 } from 'react-native-reanimated'
 
-type SwipeLeftCallBack = () => any
+type SwipeLeftCallback = () => any
 
 interface BackViewProps {
   progress: Readonly<SharedValue<number>>
 }
 
-interface Props extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'>,
+interface Props
+  extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'>,
   AnimatedBoxProps {
   children: React.ReactNode
   backView?: React.ReactNode | React.FC<BackViewProps>
-  onSwipeLeft?(conceal: SwipeLeftCallBack): any
+  onSwipeLeft?: (conceal: SwipeLeftCallback) => any
   revealed?: boolean
 }
 
 interface SwipeableViewHandle {
-  conceal(): void
+  conceal: () => void
 }
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window')
 const SWIPE_THREASHOLD = -0.2
 
 const SwipeableView = forwardRef<SwipeableViewHandle, Props>((props, ref) => {
-  const {
-    children,
-    backView,
-    onSwipeLeft,
-    simultaneousHandlers,
-    ...boxProps
-  } = props
+  const { children, backView, onSwipeLeft, simultaneousHandlers, ...boxProps } =
+    props
   const translateX = useSharedValue(0)
+
   const invokeSwipeLeft = useCallback(() => {
-    if (onSwipeLeft)
+    if (onSwipeLeft) {
       onSwipeLeft(() => {
         translateX.value = withTiming(0)
       })
+    }
   }, [onSwipeLeft])
 
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
@@ -95,25 +93,17 @@ const SwipeableView = forwardRef<SwipeableViewHandle, Props>((props, ref) => {
 
   return (
     <AnimatedBox {...boxProps}>
-      {
-        backView && (
-          <Box position="absolute" left={0} right={0} top={0} bottom={0}>
-            {
-              typeof backView === 'function'
-                ? backView({ progress })
-                : backView
-            }
-          </Box>
-        )
-      }
-
+      {backView && (
+        <Box position="absolute" left={0} right={0} top={0} bottom={0}>
+          {typeof backView === 'function' ? backView({ progress }) : backView}
+        </Box>
+      )}
       <PanGestureHandler
         activeOffsetX={[-5, 1000]}
         simultaneousHandlers={simultaneousHandlers}
-        onGestureEvent={panGesture}>
-        <AnimatedBox style={facadeStyle}>
-          {children}
-        </AnimatedBox>
+        onGestureEvent={panGesture}
+      >
+        <AnimatedBox style={facadeStyle}>{children}</AnimatedBox>
       </PanGestureHandler>
     </AnimatedBox>
   )

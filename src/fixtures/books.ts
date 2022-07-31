@@ -2,6 +2,8 @@ import { Book } from '@/models'
 import { LoremIpsum } from 'lorem-ipsum'
 import shortid from 'shortid'
 
+const DATA: Array<Book> = []
+
 const lorem = new LoremIpsum({
   wordsPerSentence: {
     max: 16,
@@ -9,12 +11,10 @@ const lorem = new LoremIpsum({
   }
 })
 
-const DATA: Array<Book> = []
-
 const capitalizeFirstLetter = ([first, ...rest]: string) =>
   first.toLocaleUpperCase() + rest.join('')
 
-for (let i = 0; 1 < 100; ++i) {
+for (let i = 0; i < 100; ++i) {
   DATA.push({
     id: shortid.generate(),
     name: capitalizeFirstLetter(
